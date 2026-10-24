@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Unlock the Language is a futuristic educational English learning website focused on active/passive voice, interjections, and synonyms/antonyms."
+    />
+    <title>Unlock the Language | Mastering English, One Lesson at a Time</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="space-bg" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="nebula nebula-one"></div>
+      <div class="nebula nebula-two"></div>
+      <div class="planet planet-1"></div>
+      <div class="planet planet-2"></div>
+      <div class="planet planet-3"></div>
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark">UL</div>
+        <div class="brand-text">
+          <span class="brand-name">Unlock the Language</span>
+          <span class="brand-tag">Mastering English, One Lesson at a Time</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#home" class="nav-link active">HOME</a>
+        <a href="#lessons" class="nav-link">LESSONS</a>
+        <a href="#videos" class="nav-link">VIDEOS</a>
+        <a href="#assessment" class="nav-link">ASSESSMENT</a>
+        <a href="#profile" class="nav-link">PROFILE</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero section-shell" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">A COSMIC LEARNING EXPERIENCE</p>
+          <h1>UNLOCK THE LANGUAGE</h1>
+          <p class="hero-subtitle">Mastering English, One Lesson at a Time</p>
+          <p class="hero-supporting">
+            Explore the universe of English grammar, discover new words, and test your
+            knowledge through interactive lessons and assessments.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#lessons" class="primary-btn">START LEARNING</a>
+            <a href="#assessment" class="secondary-btn">TAKE ASSESSMENT</a>
+          </div>
+
+          <div class="mini-stats">
+            <div>
+              <strong>03</strong>
+              <span>Core lessons</span>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <span>English focus</span>
+            </div>
+            <div>
+              <strong>04</strong>
+              <span>Assessment questions</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="galaxy-core">GRAMMAR</div>
+          <div class="orbit-ring ring-one"></div>
+          <div class="orbit-ring ring-two"></div>
+          <div class="floating-panel panel-one">VOICE</div>
+          <div class="floating-panel panel-two">WORDS</div>
+          <div class="floating-panel panel-three">EMOTION</div>
+          <div class="planet-card">
+            <span class="planet-icon">✦</span>
+            <div>
+              <strong>Language Orbit</strong>
+              <small>Track progress</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="learn-universe section-shell" id="lessons">
+        <div class="section-heading">
+          <p class="eyebrow">EXPLORE YOUR LEARNING UNIVERSE</p>
+          <h2>Grammar Galaxy</h2>
+        </div>
+        <div class="lesson-grid" id="lessonGrid"></div>
+      </section>
+
+      <section class="videos section-shell" id="videos">
+        <div class="section-heading">
+          <p class="eyebrow">WATCH &amp; LEARN</p>
+          <h2>Video lessons for every orbit</h2>
+        </div>
+        <div class="video-grid" id="videoGrid"></div>
+      </section>
+
+      <section class="journey section-shell">
+        <div class="section-heading">
+          <p class="eyebrow">LEARNING JOURNEY</p>
+          <h2>Follow your path through the galaxy</h2>
+        </div>
+
+        <div class="journey-visual" aria-label="Student learning journey">
+          <div class="journey-step start done">START</div>
+          <div class="journey-step done">🌎 English Basics</div>
+          <div class="journey-step done">🌙 Active &amp; Passive Voice</div>
+          <div class="journey-step done">🔴 Interjections</div>
+          <div class="journey-step active">🪐 Synonyms &amp; Antonyms</div>
+          <div class="journey-step">🌌 Grammar Galaxy</div>
+        </div>
+      </section>
+
+      <section class="assessment section-shell" id="assessment">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="eyebrow">MISSION: TEST YOUR KNOWLEDGE</p>
+            <h2>Answer carefully and unlock the next challenge</h2>
+          </div>
+          <span class="tag-pill">Flashcard assessment</span>
+        </div>
+
+        <div class="assessment-intro" id="assessmentIntro">
+          <p>Ready to test what you have learned? Start the assessment to focus on the questions.</p>
+          <button class="primary-btn" id="startAssessmentBtn" type="button">START ASSESSMENT</button>
+        </div>
+
+        <div class="assessment-wrapper" id="assessmentWrapper" hidden>
+          <div class="progress-rail">
+            <span id="assessmentProgressBar" style="width: 10%"></span>
+          </div>
+
+          <div class="flashcard-wrapper">
+            <div class="flashcard" id="flashcard">
+              <div class="flashcard-inner">
+                <div class="card-face card-front">
+                  <div class="card-header">
+                    <span class="question-kicker" id="questionMeta">QUESTION 01 / 04</span>
+                    <span class="question-badge">Answer to reveal the explanation</span>
+                  </div>
+                  <h3 id="questionText">Which sentence is written in active voice?</h3>
+                  <div class="answer-list" id="answerList"></div>
+                </div>
+
+                <div class="card-face card-back">
+                  <div class="result-banner" id="resultBanner">CORRECT!</div>
+                  <h3 id="resultTitle">The boy kicks the ball.</h3>
+                  <p id="resultExplanation">In active voice, the subject performs the action.</p>
+                  <div class="result-meta">
+                    <span id="correctAnswerText">Correct answer: The boy kicks the ball.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="assessment-footer">
+            <div class="warning-box" id="warningBox">
+              Please select an answer before continuing.
+            </div>
+            <button class="primary-btn" id="nextQuestionBtn" type="button" disabled>
+              NEXT QUESTION →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-page section-shell" id="profile">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="eyebrow">STUDENT PROFILES</p>
+            <h2>Meet the Students</h2>
+          </div>
+        </div>
+
+        <div class="student-profiles">
+          <article class="profile-card glass-card">
+            <div class="profile-header">
+              <img
+                src="img/PALMERO%20-%20picture.jpeg"
+                alt="Glazy E. Palmero"
+                class="profile-avatar"
+              />
+              <div>
+                <h3>Glazy E. Palmero</h3>
+                <p>Student</p>
+              </div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="info-block">
+                <span><i>👤</i> Name</span>
+                <strong>Glazy E. Palmero</strong>
+              </div>
+              <div class="info-block">
+                <span><i>🎂</i> Age</span>
+                <strong>24</strong>
+              </div>
+              <div class="info-block">
+                <span><i>⚧</i> Sex</span>
+                <strong>Female</strong>
+              </div>
+              <div class="info-block">
+                <span><i>💍</i> Civil Status</span>
+                <strong>Single</strong>
+              </div>
+              <div class="info-block">
+                <span><i>📍</i> Address</span>
+                <strong>Guizo, Mandaue City</strong>
+              </div>
+              <div class="info-block">
+                <span><i>📱</i> Contact Number</span>
+                <strong>09455121167</strong>
+              </div>
+              <div class="info-block email-info">
+                <span><i>✉️</i> Email Address</span>
+                <a href="mailto:glazypalmero123@gmail.com">glazypalmero123@gmail.com</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="profile-card glass-card">
+            <div class="profile-header">
+              <img
+                src="img/CAADLAWON%20-%20picture.jpg"
+                alt="Jonelyn Caadlawon"
+                class="profile-avatar"
+              />
+              <div>
+                <h3>Jonelyn Caadlawon</h3>
+                <p>Student</p>
+              </div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="info-block">
+                <span><i>👤</i> Name</span>
+                <strong>Jonelyn Caadlawon</strong>
+              </div>
+              <div class="info-block">
+                <span><i>🎂</i> Age</span>
+                <strong>22</strong>
+              </div>
+              <div class="info-block">
+                <span><i>⚧</i> Sex</span>
+                <strong>F</strong>
+              </div>
+              <div class="info-block">
+                <span><i>💍</i> Civil Status</span>
+                <strong>Single</strong>
+              </div>
+              <div class="info-block">
+                <span><i>📍</i> Address</span>
+                <strong>Alang-alang, Mandaue</strong>
+              </div>
+              <div class="info-block">
+                <span><i>📱</i> Contact Number</span>
+                <strong>09277669669</strong>
+              </div>
+              <div class="info-block email-info">
+                <span><i>✉️</i> Email Address</span>
+                <a href="mailto:jonelyn.caadlawon.mcc.online@gmail.com">jonelyn.caadlawon.mcc.online@gmail.com</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="profile-card glass-card">
+            <div class="profile-header">
+              <img
+                src="img/RESO-OR%20-%20picture.jpeg"
+                alt="Vincent M. Reso-or"
+                class="profile-avatar"
+              />
+              <div>
+                <h3>Vincent M. Reso-or</h3>
+                <p>Student</p>
+              </div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="info-block">
+                <span><i>👤</i> Name</span>
+                <strong>Vincent M. Reso-or</strong>
+              </div>
+              <div class="info-block">
+                <span><i>🎂</i> Age</span>
+                <strong>26</strong>
+              </div>
+              <div class="info-block">
+                <span><i>⚧</i> Sex</span>
+                <strong>Male</strong>
+              </div>
+              <div class="info-block">
+                <span><i>💍</i> Civil Status</span>
+                <strong>Single</strong>
+              </div>
+              <div class="info-block">
+                <span><i>📍</i> Address</span>
+                <strong>Umapad, Mandaue City</strong>
+              </div>
+              <div class="info-block">
+                <span><i>📱</i> Contact Number</span>
+                <strong>09438180948</strong>
+              </div>
+              <div class="info-block email-info">
+                <span><i>✉️</i> Email Address</span>
+                <a href="mailto:vresoor143@gmail.com">vresoor143@gmail.com</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="profile-actions">
+          <a href="#home" class="primary-btn">← BACK TO HOME</a>
+        </div>
+      </section>
+
+      <section class="results section-shell" id="results" hidden>
+        <div class="results-card glass-card">
+          <div class="results-header">
+            <p class="eyebrow">MISSION COMPLETE</p>
+            <h2>MISSION COMPLETE</h2>
+          </div>
+
+          <div class="results-layout">
+            <div class="score-ring-wrap">
+              <div class="score-ring" id="scoreRing">
+                <div class="score-ring-inner">
+                  <strong id="resultPercentage">0%</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="results-summary">
+              <div class="summary-stat">
+                <span>Score</span>
+                <strong id="finalScoreText">0 / 4</strong>
+              </div>
+              <div class="summary-stat">
+                <span>Correct</span>
+                <strong id="correctCountText">0</strong>
+              </div>
+              <div class="summary-stat">
+                <span>Incorrect</span>
+                <strong id="incorrectCountText">0</strong>
+              </div>
+              <div class="summary-stat">
+                <span>Performance</span>
+                <strong id="performanceLevel">Ready</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="performance-panel">
+            <h3 id="performanceTitle">Great work! Keep exploring and improving your knowledge.</h3>
+            <p id="performanceMessage">
+              You have completed the assessment. Review your results and continue your learning journey.
+            </p>
+          </div>
+
+          <div class="results-breakdown-wrap">
+            <h3>Question breakdown</h3>
+            <ul id="questionBreakdown" class="question-breakdown"></ul>
+          </div>
+
+          <div class="results-actions">
+            <button class="primary-btn" type="button" id="viewResultsBtn">REVIEW BREAKDOWN</button>
+            <button class="secondary-btn" type="button" id="dashboardReturnBtn">RETURN TO HOME</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-overlay" id="lessonModal" aria-hidden="true">
+      <div class="lesson-panel glass-card" role="dialog" aria-modal="true" aria-labelledby="lessonModalTitle">
+        <button class="close-modal" type="button" aria-label="Close lesson panel">×</button>
+        <div id="lessonContent"></div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="videoModal" aria-hidden="true">
+      <div class="video-modal-panel glass-card" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+        <button class="close-modal" type="button" aria-label="Close video panel">×</button>
+        <div class="video-modal-header">
+          <p class="eyebrow">NOW PLAYING</p>
+          <h3 id="videoModalTitle">Lesson video</h3>
+        </div>
+        <div class="video-container">
+          <video id="videoPlayer" controls playsinline preload="metadata"></video>
+        </div>
+        <div class="video-description">
+          <p id="videoModalDescription">Learn with a focused lesson that breaks down the key ideas.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
