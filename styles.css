@@ -104,6 +104,7 @@ img {
   position: absolute;
   border-radius: 50%;
   box-shadow: 0 0 35px rgba(133, 152, 255, 0.4);
+  animation: planet-drift 8s ease-in-out infinite alternate;
 }
 
 .planet-1 {
@@ -122,6 +123,7 @@ img {
   right: 26%;
   top: 24%;
   opacity: 0.7;
+  animation-delay: -2.5s;
 }
 
 .planet-3 {
@@ -131,6 +133,7 @@ img {
   left: 11%;
   top: 16%;
   opacity: 0.7;
+  animation-delay: -5s;
 }
 
 .orbit {
@@ -397,6 +400,7 @@ h1 {
   font-weight: 900;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  animation: core-breathe 5s ease-in-out infinite alternate;
 }
 
 .floating-panel {
@@ -409,7 +413,7 @@ h1 {
   font-weight: 700;
   letter-spacing: 0.12em;
   box-shadow: 0 15px 35px rgba(9, 13, 24, 0.5);
-  animation: float 9s ease-in-out infinite alternate;
+  animation: label-drift 5.5s ease-in-out infinite alternate;
 }
 
 .panel-one {
@@ -420,11 +424,13 @@ h1 {
 .panel-two {
   top: 44%;
   left: 10%;
+  animation-delay: -1.8s;
 }
 
 .panel-three {
   top: 52%;
   right: 17%;
+  animation-delay: -3.4s;
 }
 
 .planet-card {
@@ -443,6 +449,7 @@ h1 {
   z-index: 3;
   backdrop-filter: blur(12px);
   box-shadow: 0 25px 45px rgba(17, 13, 31, 0.45);
+  animation: card-hover 5s ease-in-out infinite alternate;
 }
 
 .planet-icon {
@@ -474,6 +481,7 @@ h1 {
 .ring-two {
   left: 52%;
   top: 35%;
+  animation-delay: -3.5s;
 }
 
 .section-heading {
@@ -1174,10 +1182,60 @@ h1 {
 
 @keyframes orbit {
   from {
-    transform: rotate(0deg);
+    transform: scale(0.94);
+    opacity: 0.45;
   }
   to {
-    transform: rotate(3deg);
+    transform: scale(1.06);
+    opacity: 0.85;
+  }
+}
+
+@keyframes core-breathe {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 62px rgba(74, 156, 195, 0.22);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.035);
+    box-shadow: 0 0 92px rgba(74, 156, 195, 0.38);
+  }
+}
+
+@keyframes label-drift {
+  from {
+    transform: translateY(4px);
+  }
+  to {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes card-hover {
+  from {
+    transform: translate(-50%, 2px);
+  }
+  to {
+    transform: translate(-50%, -8px);
+  }
+}
+
+@keyframes planet-drift {
+  from {
+    transform: translateY(5px);
+  }
+  to {
+    transform: translateY(-13px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
   }
 }
 
