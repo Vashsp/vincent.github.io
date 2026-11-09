@@ -186,6 +186,11 @@ img {
   letter-spacing: 0.05em;
 }
 
+.brand-icon {
+  width: 34px;
+  height: 34px;
+}
+
 .brand-text {
   display: flex;
   flex-direction: column;
