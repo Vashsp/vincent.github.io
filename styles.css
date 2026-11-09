@@ -78,6 +78,33 @@ img {
   animation: twinkle 9s linear infinite alternate;
 }
 
+.shooting-star {
+  position: absolute;
+  top: 8vh;
+  left: 0;
+  width: 150px;
+  height: 2px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent, rgba(91, 178, 215, 0.18), #ffffff);
+  box-shadow: 0 0 8px rgba(80, 175, 216, 0.8);
+  opacity: 0;
+  transform: rotate(-25deg);
+  transform-origin: left center;
+  animation: shooting-star 9s linear infinite;
+}
+
+.shooting-star::after {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px 3px rgba(116, 218, 243, 0.75);
+  content: "";
+}
+
 .nebula {
   position: absolute;
   width: 40vw;
@@ -1226,6 +1253,25 @@ h1 {
   }
   to {
     transform: translateY(-13px);
+  }
+}
+
+@keyframes shooting-star {
+  0%,
+  76% {
+    opacity: 0;
+    transform: translate3d(-15vw, -12vh, 0) rotate(-25deg);
+  }
+  78% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0;
+    transform: translate3d(125vw, 40vh, 0) rotate(-25deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(125vw, 40vh, 0) rotate(-25deg);
   }
 }
 
