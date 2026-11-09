@@ -88,37 +88,126 @@ const videoData = [
 
 const assessmentQuestions = [
   {
-    question: "Which sentence is written in active voice?",
-    options: ["The ball is kicked by the boy.", "The boy kicks the ball.", "The ball was kicked.", "The boy was kicked."],
-    answer: "The boy kicks the ball.",
-    explanation: "In active voice, the subject performs the action."
+    topic: "Active and Passive Voice",
+    question: "What is Active and Passive Voice?",
+    options: [
+      "It is about describing a person, place, or thing.",
+      "It is about how the subject and the action are connected in a sentence.",
+      "It is about words that show strong feelings.",
+      "It is about words with the same or opposite meaning."
+    ],
+    answer: 1
   },
   {
-    question: "Which interjection expresses surprise?",
-    options: ["Wow!", "Happy!", "Slow!", "Big!"],
-    answer: "Wow!",
-    explanation: "Wow! expresses surprise."
+    topic: "Active and Passive Voice",
+    question: "Which sentence is in Passive Voice?",
+    options: ["She writes a letter.", "A letter is written by her.", "She is writing a letter.", "She will write a letter."],
+    answer: 1
   },
   {
-    question: "Which pair is a synonym pair?",
-    options: ["Happy — Sad", "Big — Small", "Happy — Joyful", "Hot — Cold"],
-    answer: "Happy — Joyful",
-    explanation: "Synonyms are words with the same or nearly the same meaning."
+    topic: "Active and Passive Voice",
+    question: "Change to Passive Voice: The teacher explains the lesson.",
+    options: [
+      "The lesson is explained by the teacher.",
+      "The lesson explains the teacher.",
+      "The teacher is explained by the lesson.",
+      "The lesson was explained by the teacher."
+    ],
+    answer: 0
   },
   {
-    question: "Which pair is an antonym pair?",
-    options: ["Happy — Joyful", "Big — Large", "Big — Small", "Beautiful — Pretty"],
-    answer: "Big — Small",
-    explanation: "Antonyms are words with opposite meanings."
+    topic: "Active and Passive Voice",
+    question: "Change to Active Voice: The cake was baked by Maria.",
+    options: ["Maria bakes the cake.", "Maria baked the cake.", "Maria is baking the cake.", "Maria has baked the cake."],
+    answer: 1
+  },
+  {
+    topic: "Active and Passive Voice",
+    question: "Choose the correct Passive form: They will build a new school.",
+    options: [
+      "A new school will be built by them.",
+      "A new school is built by them.",
+      "A new school was built by them.",
+      "A new school builds by them."
+    ],
+    answer: 0
+  },
+  {
+    topic: "Synonym and Antonym",
+    question: "What are Synonyms and Antonyms?",
+    options: [
+      "Synonyms are words with the same meaning, Antonyms are words with opposite meaning.",
+      "Synonyms are words with opposite meaning, Antonyms are words with the same meaning.",
+      "Synonyms are action words, Antonyms are describing words.",
+      "Synonyms are naming words, Antonyms are joining words."
+    ],
+    answer: 0
+  },
+  {
+    topic: "Synonym and Antonym",
+    question: "What is the synonym of happy?",
+    options: ["Sad", "Joyful", "Angry", "Tired"],
+    answer: 1
+  },
+  {
+    topic: "Synonym and Antonym",
+    question: "What is the antonym of brave?",
+    options: ["Strong", "Fearful", "Kind", "Smart"],
+    answer: 1
+  },
+  {
+    topic: "Synonym and Antonym",
+    question: "What is the synonym of quick?",
+    options: ["Slow", "Fast", "Late", "Weak"],
+    answer: 1
+  },
+  {
+    topic: "Synonym and Antonym",
+    question: "What is the antonym of begin?",
+    options: ["Start", "Open", "End", "Continue"],
+    answer: 2
+  },
+  {
+    topic: "Interjections",
+    question: "What is an Interjection?",
+    options: [
+      "A word that names a person, place, or thing.",
+      "A word that shows action.",
+      "A word that expresses a sudden feeling or emotion.",
+      "A word that connects two sentences."
+    ],
+    answer: 2
+  },
+  {
+    topic: "Interjections",
+    question: "Which word is an interjection?",
+    options: ["Wow!", "Table", "Run", "Blue"],
+    answer: 0
+  },
+  {
+    topic: "Interjections",
+    question: "Choose the correct interjection to show surprise: ___! I did not expect you here.",
+    options: ["Ouch", "Wow", "Alas", "Shh"],
+    answer: 1
+  },
+  {
+    topic: "Interjections",
+    question: "___! Be quiet, the baby is sleeping. What interjection best fits?",
+    options: ["Wow", "Shh", "Hooray", "Oops"],
+    answer: 1
+  },
+  {
+    topic: "Interjections",
+    question: "___! We won the game! What interjection best fits?",
+    options: ["Alas", "Ouch", "Hurray", "Hmm"],
+    answer: 2
   }
 ];
 
 const state = {
   currentQuestion: 0,
   currentAnswer: null,
-  answered: false,
-  score: 0,
-  finished: false
+  answers: []
 };
 
 const lessonGrid = document.getElementById("lessonGrid");
@@ -130,10 +219,6 @@ const nextQuestionBtn = document.getElementById("nextQuestionBtn");
 const questionMeta = document.getElementById("questionMeta");
 const questionText = document.getElementById("questionText");
 const answerList = document.getElementById("answerList");
-const resultBanner = document.getElementById("resultBanner");
-const resultTitle = document.getElementById("resultTitle");
-const resultExplanation = document.getElementById("resultExplanation");
-const correctAnswerText = document.getElementById("correctAnswerText");
 const progressBar = document.getElementById("assessmentProgressBar");
 const warningBox = document.getElementById("warningBox");
 const assessmentSection = document.getElementById("assessment");
@@ -193,29 +278,27 @@ const renderVideos = () => {
 
 const renderAssessment = () => {
   const currentQuestion = assessmentQuestions[state.currentQuestion];
-  const options = currentQuestion.options;
-  const answerText = currentQuestion.answer;
 
-  answerList.innerHTML = options
-    .map((option) => {
-      const selected = option === state.currentAnswer;
+  answerList.innerHTML = currentQuestion.options
+    .map((option, index) => {
+      const selected = index === state.currentAnswer;
       return `
         <button
           type="button"
           class="answer-option ${selected ? "selected" : ""}"
-          data-answer="${option}"
-          aria-label="${option}"
-          ${state.answered ? "disabled" : ""}
+          data-answer="${index}"
         >
-          ${option}
+          <span class="answer-letter">${String.fromCharCode(65 + index)}.</span>
+          <span>${option}</span>
         </button>
       `;
     })
     .join("");
 
-  questionMeta.textContent = `QUESTION ${String(state.currentQuestion + 1).padStart(2, "0")} / ${assessmentQuestions.length}`;
+  questionMeta.textContent = `${currentQuestion.topic.toUpperCase()} · QUESTION ${String(state.currentQuestion + 1).padStart(2, "0")} / ${assessmentQuestions.length}`;
   questionText.textContent = currentQuestion.question;
   progressBar.style.width = `${((state.currentQuestion + 1) / assessmentQuestions.length) * 100}%`;
+  nextQuestionBtn.disabled = state.currentAnswer === null;
 
   nextQuestionBtn.textContent =
     state.currentQuestion === assessmentQuestions.length - 1 ? "SUBMIT ASSESSMENT" : "NEXT QUESTION →";
@@ -225,60 +308,38 @@ const checkAnswer = (event) => {
   const selectedAnswer = event.target.closest(".answer-option");
   if (!selectedAnswer) return;
 
-  if (state.answered) return;
-
-  state.currentAnswer = selectedAnswer.dataset.answer;
-  state.answered = true;
-  selectedAnswer.classList.add("selected");
+  state.currentAnswer = Number(selectedAnswer.dataset.answer);
   answerList.querySelectorAll(".answer-option").forEach((option) => {
-    option.disabled = true;
+    option.classList.toggle("selected", option === selectedAnswer);
   });
-
-  const question = assessmentQuestions[state.currentQuestion];
-  const correct = selectedAnswer.dataset.answer === question.answer;
-
-  resultBanner.textContent = correct ? "CORRECT!" : "INCORRECT!";
-  resultBanner.classList.toggle("correct", correct);
-  resultBanner.classList.toggle("incorrect", !correct);
-
-  resultTitle.textContent = correct ? `${question.answer}` : `The correct answer is: ${question.answer}`;
-  resultExplanation.textContent = question.explanation;
-
-  correctAnswerText.textContent = `Correct answer: ${question.answer}`;
-
-  warningBox.textContent = "Answer locked. You may not change it.";
-  warningBox.style.color = "#ffd166";
-
-  const flashcard = document.getElementById("flashcard");
-  const flashcardInner = flashcard.querySelector(".flashcard-inner");
-  flashcardInner.classList.add("is-flipped");
-
   nextQuestionBtn.disabled = false;
-
-  state.score += correct ? 1 : 0;
+  warningBox.textContent = "";
 };
 
 const nextQuestion = () => {
-  if (!state.answered) {
+  if (state.currentAnswer === null) {
     warningBox.textContent = "Please select an answer before continuing.";
     warningBox.style.color = "#ff6d7c";
     return;
   }
 
+  state.answers[state.currentQuestion] = state.currentAnswer;
+
   if (state.currentQuestion < assessmentQuestions.length - 1) {
     state.currentQuestion += 1;
-    state.answered = false;
-    state.currentAnswer = null;
+    state.currentAnswer = state.answers[state.currentQuestion] ?? null;
     warningBox.textContent = "Please select an answer before continuing.";
     warningBox.style.color = "#ffffff";
-    document.getElementById("flashcard").querySelector(".flashcard-inner").classList.remove("is-flipped");
     renderAssessment();
     document.getElementById("flashcard").scrollIntoView({ behavior: "smooth", block: "center" });
     return;
   }
 
   const total = assessmentQuestions.length;
-  const correct = state.score;
+  const correct = assessmentQuestions.reduce(
+    (score, question, index) => score + (state.answers[index] === question.answer ? 1 : 0),
+    0
+  );
   const wrong = total - correct;
   const percentage = Math.round((correct / total) * 100);
 
@@ -317,7 +378,10 @@ const nextQuestion = () => {
   questionBreakdown.replaceChildren();
   assessmentQuestions.forEach((question, index) => {
     const li = document.createElement("li");
-    li.textContent = `Question ${index + 1}: ${question.question}`;
+    const isCorrect = state.answers[index] === question.answer;
+    const chosenAnswer = question.options[state.answers[index]];
+    li.textContent = `${question.topic} · Question ${index + 1}: ${question.question} Your answer: ${String.fromCharCode(65 + state.answers[index])}. ${chosenAnswer} · ${isCorrect ? "Correct" : "Incorrect"}`;
+    li.classList.add(isCorrect ? "answer-correct" : "answer-incorrect");
     questionBreakdown.append(li);
   });
 
@@ -418,15 +482,12 @@ const closeModal = (event) => {
 const startAssessment = () => {
   state.currentQuestion = 0;
   state.currentAnswer = null;
-  state.answered = false;
-  state.score = 0;
-  state.finished = false;
+  state.answers = [];
   assessmentIntro.hidden = true;
   assessmentWrapper.hidden = false;
   assessmentSection.hidden = false;
   resultSection.hidden = true;
   document.body.classList.add("assessment-mode");
-  document.getElementById("flashcard").querySelector(".flashcard-inner").classList.remove("is-flipped");
   renderAssessment();
   window.scrollTo(0, 0);
 };
@@ -437,7 +498,6 @@ const returnToHome = () => {
   assessmentSection.hidden = false;
   assessmentWrapper.hidden = true;
   assessmentIntro.hidden = false;
-  document.getElementById("flashcard").querySelector(".flashcard-inner").classList.remove("is-flipped");
   window.location.hash = "home";
 };
 
