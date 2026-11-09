@@ -207,7 +207,8 @@ const assessmentQuestions = [
 const state = {
   currentQuestion: 0,
   currentAnswer: null,
-  answers: []
+  answers: [],
+  advancing: false
 };
 
 const lessonGrid = document.getElementById("lessonGrid");
@@ -215,7 +216,6 @@ const videoGrid = document.getElementById("videoGrid");
 const lessonModal = document.getElementById("lessonModal");
 const lessonContent = document.getElementById("lessonContent");
 const resultSection = document.getElementById("results");
-const nextQuestionBtn = document.getElementById("nextQuestionBtn");
 const questionMeta = document.getElementById("questionMeta");
 const questionText = document.getElementById("questionText");
 const answerList = document.getElementById("answerList");
@@ -278,6 +278,11 @@ const renderVideos = () => {
 
 const renderAssessment = () => {
   const currentQuestion = assessmentQuestions[state.currentQuestion];
+  state.advancing = false;
+  document.getElementById("flashcard").classList.toggle(
+    "voice-assessment",
+    currentQuestion.topic === "Active and Passive Voice"
+  );
 
   answerList.innerHTML = currentQuestion.options
     .map((option, index) => {
@@ -298,27 +303,26 @@ const renderAssessment = () => {
   questionMeta.textContent = `${currentQuestion.topic.toUpperCase()} · QUESTION ${String(state.currentQuestion + 1).padStart(2, "0")} / ${assessmentQuestions.length}`;
   questionText.textContent = currentQuestion.question;
   progressBar.style.width = `${((state.currentQuestion + 1) / assessmentQuestions.length) * 100}%`;
-  nextQuestionBtn.disabled = state.currentAnswer === null;
-
-  nextQuestionBtn.textContent =
-    state.currentQuestion === assessmentQuestions.length - 1 ? "SUBMIT ASSESSMENT" : "NEXT QUESTION →";
 };
 
 const checkAnswer = (event) => {
   const selectedAnswer = event.target.closest(".answer-option");
-  if (!selectedAnswer) return;
+  if (!selectedAnswer || state.advancing) return;
 
   state.currentAnswer = Number(selectedAnswer.dataset.answer);
+  state.advancing = true;
   answerList.querySelectorAll(".answer-option").forEach((option) => {
+    option.disabled = true;
     option.classList.toggle("selected", option === selectedAnswer);
   });
-  nextQuestionBtn.disabled = false;
-  warningBox.textContent = "";
+  warningBox.textContent = "Answer saved. Turning to the next card...";
+  document.querySelector(".flashcard-inner").classList.add("is-flipped");
+  window.setTimeout(nextQuestion, 650);
 };
 
 const nextQuestion = () => {
   if (state.currentAnswer === null) {
-    warningBox.textContent = "Please select an answer before continuing.";
+    warningBox.textContent = "Choose an answer to turn the card.";
     warningBox.style.color = "#ff6d7c";
     return;
   }
@@ -327,8 +331,9 @@ const nextQuestion = () => {
 
   if (state.currentQuestion < assessmentQuestions.length - 1) {
     state.currentQuestion += 1;
-    state.currentAnswer = state.answers[state.currentQuestion] ?? null;
-    warningBox.textContent = "Please select an answer before continuing.";
+    state.currentAnswer = null;
+    document.querySelector(".flashcard-inner").classList.remove("is-flipped");
+    warningBox.textContent = "Choose an answer to turn the card.";
     warningBox.style.color = "var(--muted)";
     renderAssessment();
     document.getElementById("flashcard").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -385,9 +390,9 @@ const nextQuestion = () => {
     questionBreakdown.append(li);
   });
 
-  nextQuestionBtn.disabled = true;
-  nextQuestionBtn.textContent = "SUBMITTED";
 };
+
+answerList.addEventListener("click", checkAnswer);
 
 const openLessonModal = (event) => {
   const lessonId = event.target.closest("[data-lesson-id]").dataset.lessonId;
@@ -510,10 +515,6 @@ document.addEventListener("click", (event) => {
     openVideoModal(event);
   }
 
-  if (event.target.closest(".answer-option")) {
-    checkAnswer(event);
-  }
-
   if (event.target.closest(".close-modal")) {
     closeModal(event);
   }
@@ -534,9 +535,6 @@ document.addEventListener("click", (event) => {
     document.getElementById("questionBreakdown").scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
-  if (event.target.closest("#nextQuestionBtn")) {
-    nextQuestion();
-  }
 });
 
 document.addEventListener("keydown", (event) => {
