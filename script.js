@@ -329,7 +329,7 @@ const nextQuestion = () => {
     state.currentQuestion += 1;
     state.currentAnswer = state.answers[state.currentQuestion] ?? null;
     warningBox.textContent = "Please select an answer before continuing.";
-    warningBox.style.color = "#ffffff";
+    warningBox.style.color = "var(--muted)";
     renderAssessment();
     document.getElementById("flashcard").scrollIntoView({ behavior: "smooth", block: "center" });
     return;
