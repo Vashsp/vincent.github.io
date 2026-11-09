@@ -540,6 +540,7 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .lesson-card:hover,
@@ -621,16 +622,9 @@ h1 {
   color: var(--muted);
 }
 
-.lesson-card .explore-btn {
-  width: fit-content;
-  margin-top: 1.2rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text);
-}
-
-.lesson-card .explore-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
+.lesson-card:focus-visible {
+  outline: 3px solid rgba(55, 121, 187, 0.7);
+  outline-offset: 4px;
 }
 
 .video-card {
@@ -1625,15 +1619,10 @@ body.assessment-mode .results-card {
     color: #1b3d5a;
   }
 
-  .lesson-card .explore-btn,
   .journey-step {
     background: rgba(255, 255, 255, 0.68);
     border-color: rgba(42, 94, 132, 0.17);
     color: #294d68;
-  }
-
-  .lesson-card .explore-btn:hover {
-    background: #e8f5fb;
   }
 
   .video-thumb {

@@ -229,7 +229,13 @@ const renderLessons = () => {
   lessonGrid.innerHTML = lessonData
     .map(
       (lesson) => `
-      <article class="lesson-card">
+      <article
+        class="lesson-card"
+        data-lesson-id="${lesson.id}"
+        role="button"
+        tabindex="0"
+        aria-label="Open ${lesson.title} lesson"
+      >
         <div class="card-top">
           <div class="planet-badge">${lesson.emoji}</div>
           <span class="planet-badge-subtle">${lesson.grade}</span>
@@ -244,9 +250,6 @@ const renderLessons = () => {
             ${lesson.structure}
           </div>
         </div>
-        <button class="explore-btn" type="button" data-lesson-id="${lesson.id}">
-          EXPLORE LESSON →
-        </button>
       </article>
     `
     )
@@ -507,7 +510,7 @@ const returnToHome = () => {
 };
 
 document.addEventListener("click", (event) => {
-  if (event.target.closest(".explore-btn")) {
+  if (event.target.closest(".lesson-card")) {
     openLessonModal(event);
   }
 
@@ -538,6 +541,12 @@ document.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  const lessonCard = event.target.closest(".lesson-card");
+  if (lessonCard && (event.key === "Enter" || event.key === " ")) {
+    event.preventDefault();
+    openLessonModal(event);
+  }
+
   if (event.key === "Escape") {
     const openModal = document.querySelector(".modal-overlay.is-open");
     if (openModal) {
